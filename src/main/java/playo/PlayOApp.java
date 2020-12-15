@@ -8,12 +8,17 @@ import javafx.stage.Stage;
 
 public class PlayOApp extends Application {
 
+
+    private static PlayOApp app;
+
     @Override
-    public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(PlayOApp.class.getResource("/layout/root.fxml"));
-        primaryStage.setTitle("PlayO");
+    public void start(Stage primaryStage) throws Exception {
+        var loader = new FXMLLoader();
+        Parent root = (Parent) loader.load(PlayOApp.class.getResource("/layout/root.fxml"));
         primaryStage.setScene(new Scene(root, 1280, 720));
         primaryStage.show();
+        var con = new SongCardController();
+
     }
 
 
