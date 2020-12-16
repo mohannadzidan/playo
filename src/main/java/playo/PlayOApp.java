@@ -13,16 +13,21 @@ public class PlayOApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        PlayOApp.app = this;
         var loader = new FXMLLoader();
         Parent root = (Parent) loader.load(PlayOApp.class.getResource("/layout/root.fxml"));
+        primaryStage.setTitle("PlayO");
         primaryStage.setScene(new Scene(root, 1280, 720));
         primaryStage.show();
-        var con = new SongCardController();
 
     }
 
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public static PlayOApp getInstance() {
+        return app;
     }
 }
