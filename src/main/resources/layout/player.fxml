@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="root" prefHeight="100.0" style="-fx-background-color: #4f4f4f;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="playo.PlayerController">
+<BorderPane fx:id="root" prefHeight="100.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="playo.PlayerController">
    <center>
       <VBox alignment="CENTER" BorderPane.alignment="CENTER">
          <children>
@@ -39,15 +39,15 @@
       </VBox>
    </center>
    <left>
-      <HBox alignment="CENTER_LEFT" prefWidth="300.0" spacing="5.0">
+      <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="300.0" spacing="5.0">
          <children>
             <ImageView fx:id="musicArt" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
                <image>
                   <Image url="@../icons/default-music-art.png" />
                </image></ImageView>
-            <VBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+            <VBox fx:id="trackInfoContainer" alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefWidth="200.0" HBox.hgrow="ALWAYS">
                <children>
-                  <Label fx:id="trackName" text="Track Name" textFill="WHITE">
+                  <Label fx:id="trackName" ellipsisString="" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="Track NameTrack NameTrack Name" textFill="WHITE" textOverrun="CLIP">
                      <font>
                         <Font name="Calibri Light" size="24.0" />
                      </font>
