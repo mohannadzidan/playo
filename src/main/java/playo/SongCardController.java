@@ -11,9 +11,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import playo.controllers.PropertyController;
+import playo.playlists.Playlist;
 import playo.utils.ImageUtils;
 import playo.events.Change;
-import playo.events.EventListener;
+import playo.events.ChangeListener;
 import playo.logging.Logger;
 import playo.views.SwingingLabel;
 
@@ -34,7 +35,7 @@ public class SongCardController extends PlayODynamicController {
     private Playlist playlist;
     private FadeTransition fadeStateOverlayAnimation;
 
-    private final EventListener<Change<MediaPlayer.Status>> playerStatusListener = (c) -> {
+    private final ChangeListener<Change<MediaPlayer.Status>> playerStatusListener = (c) -> {
         if (c.getNewValue() == MediaPlayer.Status.PLAYING) {
             playIcon.setVisible(true);
             pauseIcon.setVisible(false);
@@ -44,13 +45,13 @@ public class SongCardController extends PlayODynamicController {
         }
     };
 
-    private final EventListener<Change<Track>> trackChangeListener = (c) -> {
-        if (this.track == c.getNewValue()) {
+    private final ChangeListener<Change<Track>> trackChangeListener = (c) -> {
+        if (this.track != null && this.track == c.getNewValue()) {
             var player = PlayOSingletonController.getController(PlayerController.class);
             player.addPlayerStateListener(playerStatusListener);
             fadeStateOverlayAnimation.setRate(-1);
             fadeStateOverlayAnimation.play();
-        } else if (c.getOldValue() == this.track) {
+        } else if (this.track != null && c.getOldValue() == this.track) {
             var player = PlayOSingletonController.getController(PlayerController.class);
             player.removePlayerStateListener(playerStatusListener);
             fadeStateOverlayAnimation.setRate(1);
@@ -165,6 +166,7 @@ public class SongCardController extends PlayODynamicController {
     @Override
     public void dispose() {
         if (!isSetup) return;
+        LOGGER.info("disposed card "+hashCode());
         track.getMetadata().removeListener(metadataLoadListener);
         playlist.removeCurrentTrackChangeListener(trackChangeListener);
     }

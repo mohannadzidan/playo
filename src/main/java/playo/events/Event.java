@@ -2,21 +2,21 @@ package playo.events;
 
 import java.util.ArrayList;
 
-public class Event<T> {
-    private final ArrayList<EventListener<T>> listeners = new ArrayList<>();
+/**
+ *
+ * @param <T> the event handler
+ */
+public abstract class Event<T extends EventListener> {
+    protected final ArrayList<T> listeners = new ArrayList<>();
 
-    public void populate(T data) {
-        for (var l : listeners) l.onEvent(data);
-    }
-
-    public void addListener(EventListener<T> listener) {
+    public void addListener(T listener) {
         if (listener == null) throw new NullPointerException("Listener cannot be null!");
         if (!listeners.contains(listener)) {
             listeners.add(listener);
         }
     }
 
-    public void removeListener(EventListener<T> listener) {
+    public void removeListener(T listener) {
         listeners.remove(listener);
     }
 }

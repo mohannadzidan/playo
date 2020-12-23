@@ -1,9 +1,14 @@
 package playo;
 
+import javafx.event.ActionEvent;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.FlowPane;
 import playo.events.Change;
-import playo.events.EventListener;
+import playo.events.ChangeListener;
+import playo.events.InvalidationListener;
 import playo.logging.Logger;
+import playo.playlists.Playlist;
+import playo.playlists.SortedPlaylist;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,10 +17,11 @@ public class SongsListController extends PlayOSingletonController implements Loa
     public FlowPane songCardsContainer;
 
     private static final Logger LOGGER = new Logger(SongsListController.class.getName());
-    private Playlist playlist;
+    private SortedPlaylist playlist;
     private final ArrayList<SongCardController> cardControllers = new ArrayList<>();
+    private final InvalidationListener playlistSortListener = this::invalidateAllCards;
 
-    private final EventListener<Change<Track>> playlistTracksListener = (change) -> {
+    private final ChangeListener<Change<Track>> playlistTracksListener = (change) -> {
         if (change.getOldValue() == null && change.getNewValue() != null) {
             // track added
             var track = change.getNewValue();
@@ -34,7 +40,7 @@ public class SongsListController extends PlayOSingletonController implements Loa
             // track removed
             var track = change.getOldValue();
             var match = cardControllers.stream().filter((a) -> a.getTrack() == change.getOldValue()).findFirst();
-            if(match.isPresent()){
+            if (match.isPresent()) {
                 songCardsContainer.getChildren().remove(match.get().root);
                 cardControllers.remove(match.get());
             }
@@ -44,18 +50,24 @@ public class SongsListController extends PlayOSingletonController implements Loa
     @Override
     public void load(Playlist playlist) {
         if (this.playlist != null) {
-            // unbind previous list first
-
+            this.playlist.removeTrackListChangeListener(playlistTracksListener); // unbind previous list first
+            this.playlist.removeOnSortListener(playlistSortListener);
         }
-        this.playlist = playlist;
+        this.playlist = new SortedPlaylist(playlist);
+        this.playlist.addTrackListChangeListener(playlistTracksListener); // bind
+        this.playlist.addOnSortListener(playlistSortListener); // bind
+        invalidateAllCards();
+    }
+
+    private void invalidateAllCards(){
         var contents = songCardsContainer.getChildren();
         contents.clear();
-        var tracks = playlist.getAllTracks();
+        var tracks = this.playlist.getAllTracks();
         for (var t : tracks) {
             try {
-                var cardController = SongCardController.create(t, playlist);
+                var cardController = SongCardController.create(t, this.playlist);
                 cardController.root.setOnMouseClicked((a) -> {
-                    playlist.moveTo(t);
+                    this.playlist.moveTo(t);
                 });
                 contents.add(cardController.root);
                 cardControllers.add(cardController);
@@ -64,11 +76,21 @@ public class SongsListController extends PlayOSingletonController implements Loa
                 LOGGER.error("Failed to create song-card");
             }
         }
-        // bind
-        playlist.addTrackListChangeListener(playlistTracksListener);
     }
 
     public Playlist getPlaylist() {
         return playlist;
+    }
+
+    public void onSortByAction(ActionEvent actionEvent) {
+        MenuItem item = (MenuItem) actionEvent.getSource();
+        System.out.println(item.getText());
+        switch (item.getText()){
+            case "Title" -> playlist.setSortingMode(SortedPlaylist.SortingMode.TITLE);
+            case "Album" -> playlist.setSortingMode(SortedPlaylist.SortingMode.ALBUM);
+            case "Artist" -> playlist.setSortingMode(SortedPlaylist.SortingMode.ARTIST);
+            case "Year" -> playlist.setSortingMode(SortedPlaylist.SortingMode.YEAR);
+        }
+
     }
 }

@@ -38,7 +38,7 @@ public class Track {
     }
 
     public String getYear() {
-        return Objects.requireNonNullElse((String) metadata.get("year"), "-");
+        return Objects.requireNonNullElse(metadata.get("year"), "-").toString();
     }
 
     public Image getMusicArt() {

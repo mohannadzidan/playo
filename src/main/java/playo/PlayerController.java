@@ -15,8 +15,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import playo.events.Change;
-import playo.events.Event;
-import playo.events.EventListener;
+import playo.events.ChangeEvent;
+import playo.events.ChangeListener;
+import playo.playlists.Playlist;
 import playo.utils.ImageUtils;
 import playo.views.SwingingLabel;
 
@@ -40,13 +41,13 @@ public class PlayerController extends PlayOSingletonController implements Loader
     private Playlist loadedList = null;
     private boolean isSliderModifiedFromPlayer;
 
-    private final EventListener<Change<Track>> trackChangeListener = (c) -> {
+    private final ChangeListener<Change<Track>> trackChangeListener = (c) -> {
         boolean check = mediaPlayer != null;
         loadTrack(c.getNewValue());
         if (check) mediaPlayer.setAutoPlay(true);
     };
 
-    private final Event<Change<MediaPlayer.Status>> playerStateEvent = new Event<>();
+    private final ChangeEvent<Change<MediaPlayer.Status>> playerStateEvent = new ChangeEvent<>();
 
     public void initialize() {
         musicArt.setImage(Track.DEFAULT_MUSIC_ART);
@@ -116,7 +117,7 @@ public class PlayerController extends PlayOSingletonController implements Loader
         });
         mediaPlayer.volumeProperty().bind(volumeSlider.valueProperty());
         mediaPlayer.muteProperty().bind(muteCheckbox.selectedProperty());
-        mediaPlayer.statusProperty().addListener((o, oldData, newData) -> playerStateEvent.populate(new Change<>(oldData, newData)));
+        mediaPlayer.statusProperty().addListener((o, oldData, newData) -> playerStateEvent.invoke(new Change<>(oldData, newData)));
 
         mediaPlayer.currentTimeProperty().addListener((observableValue, duration, t1) -> {
             isSliderModifiedFromPlayer = true;
@@ -200,11 +201,11 @@ public class PlayerController extends PlayOSingletonController implements Loader
         }
     }
 
-    public void addPlayerStateListener(EventListener<Change<MediaPlayer.Status>> listener) {
+    public void addPlayerStateListener(ChangeListener<Change<MediaPlayer.Status>> listener) {
         playerStateEvent.addListener(listener);
     }
 
-    public void removePlayerStateListener(EventListener<Change<MediaPlayer.Status>> listener) {
+    public void removePlayerStateListener(ChangeListener<Change<MediaPlayer.Status>> listener) {
         playerStateEvent.removeListener(listener);
     }
 

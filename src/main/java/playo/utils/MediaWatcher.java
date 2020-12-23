@@ -1,7 +1,7 @@
 package playo.utils;
 
 import javafx.application.Platform;
-import playo.Playlist;
+import playo.playlists.Playlist;
 import playo.Track;
 
 import java.io.File;
