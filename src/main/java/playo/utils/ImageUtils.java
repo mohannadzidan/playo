@@ -40,6 +40,8 @@ public final class ImageUtils {
                 totalPoints++;
             }
         }
+        var avg = new Color(totalRed / totalPoints, totalGreen / totalPoints, totalBlue / totalPoints, 1);
+        System.out.println(avg);
         return new Color(totalRed / totalPoints, totalGreen / totalPoints, totalBlue / totalPoints, 1);
     }
 

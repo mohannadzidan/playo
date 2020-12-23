@@ -1,13 +1,12 @@
 package playo;
 
-import javafx.animation.Animation;
-import javafx.animation.Interpolator;
-import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.effect.BoxBlur;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
@@ -15,10 +14,10 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-import playo.utils.ImageUtils;
 import playo.events.Change;
 import playo.events.Event;
 import playo.events.EventListener;
+import playo.utils.ImageUtils;
 import playo.views.SwingingLabel;
 
 
@@ -35,6 +34,7 @@ public class PlayerController extends PlayOSingletonController implements Loader
     public CheckBox muteCheckbox;
     public CheckBox shuffleCheckbox;
     public CheckBox repeatCheckbox;
+    public ImageView background;
 
     private MediaPlayer mediaPlayer;
     private Playlist loadedList = null;
@@ -60,13 +60,35 @@ public class PlayerController extends PlayOSingletonController implements Loader
             }
         });
 
-        /*// set clipping area for the track info container
-        final Rectangle outputClip = new Rectangle();
-        trackInfoContainer.setClip(outputClip);
-        trackInfoContainer.layoutBoundsProperty().addListener((ov, oldValue, newValue) -> {
-            outputClip.setWidth(newValue.getWidth());
-            outputClip.setHeight(newValue.getHeight());
-        });*/
+        BoxBlur blur = new BoxBlur();
+        blur.setIterations(3);
+        blur.setHeight(10);
+        blur.setWidth(10);
+        ColorAdjust colorAdjust = new ColorAdjust();
+        colorAdjust.setInput(blur);
+        colorAdjust.setBrightness(-0.5);
+        background.setEffect(colorAdjust);
+        Rectangle clip = new Rectangle();
+        root.setClip(clip);
+        root.layoutBoundsProperty().addListener((o, oldVal, newVal) -> {
+            clip.setWidth(newVal.getWidth());
+            clip.setHeight(newVal.getHeight());
+            if (background.getImage() != null) {
+                double scale = Math.max(newVal.getWidth() / background.getImage().getWidth(), newVal.getHeight() / background.getImage().getHeight()) + 0.1f;
+                background.setScaleX(scale);
+                background.setScaleY(scale);
+                background.setScaleZ(scale);
+            }
+        });
+        background.imageProperty().addListener((o, oldVal, newVal) -> {
+            var bounds = root.getLayoutBounds();
+            background.setFitWidth(newVal.getWidth());
+            background.setFitHeight(newVal.getHeight());
+            double scale = Math.max(bounds.getWidth() / newVal.getWidth(), bounds.getHeight() / newVal.getHeight()) + 0.1f;
+            background.setScaleX(scale);
+            background.setScaleY(scale);
+            background.setScaleZ(scale);
+        });
         setupAnimations();
     }
 
@@ -90,8 +112,7 @@ public class PlayerController extends PlayOSingletonController implements Loader
             musicArt.setViewport(ImageUtils.aspectRatioViewport(musicArt.getImage(), 1, 1));
             trackName.setText(track.getTitle());
             artistName.setText(track.getArtist());
-            var color = ImageUtils.avgColor(musicArt.getImage()).darker().darker();
-            root.setStyle("-fx-background-color:" + colorToHex(color) + ";");
+            background.setImage(track.getMusicArt());
         });
         mediaPlayer.volumeProperty().bind(volumeSlider.valueProperty());
         mediaPlayer.muteProperty().bind(muteCheckbox.selectedProperty());

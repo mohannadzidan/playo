@@ -23,8 +23,8 @@ public class PlayOApp extends Application {
         primaryStage.setMinWidth(800);
         primaryStage.setMinHeight(600);
         primaryStage.setScene(new Scene(root, 1280, 720));
+        //primaryStage.getScene().getStylesheets().add("/css/dark-theme.css");
         primaryStage.show();
-        // TODO loading tracks from resources should be replaced by load from directory(ies)
         var file = new File("C:/Users/mohan/Music");
         System.out.println(file.exists());
         watcher = new MediaWatcher();

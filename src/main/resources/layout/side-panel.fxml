@@ -5,28 +5,26 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxWidth="-Infinity" minWidth="-Infinity" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<?import playo.views.BongoButton?>
+<BorderPane styleClass="side-panel" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="playo.controllers.SidePanelController">
    <top>
-      <VBox spacing="5.0" BorderPane.alignment="CENTER">
+      <VBox spacing="1" BorderPane.alignment="CENTER">
          <children>
-            <TextField promptText="Search" VBox.vgrow="ALWAYS" />
-            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" text="All Music" VBox.vgrow="ALWAYS" />
+            <BongoButton fx:id="allTracksButton" VBox.vgrow="ALWAYS" />
             <Separator prefHeight="0.0" prefWidth="224.0" VBox.vgrow="ALWAYS" />
-            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" text="Favorite - Playlists" VBox.vgrow="ALWAYS" />
+            <BongoButton fx:id="favouriteTracksButton" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
    </top>
-   <bottom>
-      <HBox alignment="CENTER_RIGHT" BorderPane.alignment="CENTER">
-         <children>
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="65.0" text="Settings" />
-         </children>
-      </HBox>
-   </bottom>
+   
    <padding>
-      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+      <Insets bottom="5.0" top="5.0" />
    </padding>
+   <bottom>
+      <VBox spacing="5.0" BorderPane.alignment="CENTER">
+         <BongoButton fx:id="settingsButton" VBox.vgrow="ALWAYS" />
+      </VBox>
+   </bottom>
 </BorderPane>
