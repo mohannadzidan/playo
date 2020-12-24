@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox fx:id="settingWin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="playo.SettingsWindow">
+   <children>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Settings" wrappingWidth="122.5625">
+         <VBox.margin>
+            <Insets left="20.0" top="20.0" />
+         </VBox.margin>
+         <font>
+            <Font name="System Bold" size="26.0" />
+         </font>
+      </Text>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Music on this Pc">
+         <font>
+            <Font size="22.0" />
+         </font>
+         <VBox.margin>
+            <Insets left="20.0" />
+         </VBox.margin>
+      </Text>
+      <Text fill="#0919f5" strokeType="OUTSIDE" strokeWidth="0.0" text="choose where to look for music" wrappingWidth="334.75">
+         <VBox.margin>
+            <Insets left="20.0" />
+         </VBox.margin>
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Text>
+      <ScrollPane fx:id="directoriesList" prefHeight="200.0" prefWidth="200.0">
+         <content>
+            <VBox fx:id="directoryy" prefHeight="186.0" prefWidth="593.0" />
+         </content>
+      </ScrollPane>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Button fx:id="addDirBut" mnemonicParsing="false" onMouseClicked="#addDirClick" text="Add directory">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="rty" mnemonicParsing="false" onAction="#hdel" text="Button" />
+         </children>
+      </HBox>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Theme">
+         <VBox.margin>
+            <Insets left="20.0" />
+         </VBox.margin>
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Text>
+      <RadioButton fx:id="lightMode" mnemonicParsing="false" onMouseClicked="#lightModeClick" text="Light">
+         <VBox.margin>
+            <Insets left="20.0" />
+         </VBox.margin>
+         <font>
+            <Font size="18.0" />
+         </font>
+      </RadioButton>
+      <RadioButton fx:id="darkMode" mnemonicParsing="false" onMouseClicked="#darkModeClick" text="Dark">
+         <VBox.margin>
+            <Insets bottom="20.0" left="20.0" />
+         </VBox.margin>
+         <font>
+            <Font size="18.0" />
+         </font>
+      </RadioButton>
+   </children>
+</VBox>

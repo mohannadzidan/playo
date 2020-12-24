@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<HBox fx:id="directoryBox" fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="33.0" prefWidth="432.0" snapToPixel="false" spacing="200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="playo.Directory">
+   <children>
+      <Text fx:id="diectory" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+         <HBox.margin>
+            <Insets left="10.0" top="6.0" />
+         </HBox.margin>
+      </Text>
+      <Button fx:id="removeDir" mnemonicParsing="false" onAction="#removeClick" text="Button">
+         <HBox.margin>
+            <Insets />
+         </HBox.margin></Button>
+   </children>
+</HBox>
