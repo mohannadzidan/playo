@@ -14,20 +14,12 @@ import javax.swing.text.JTextComponent;
 import java.awt.*;
 import java.io.IOException;
 
-public class Directory {
+public class DirectoryController {
     @FXML
-    public HBox directoryBox = new HBox();
+    public HBox root = new HBox();
     @FXML
-    public Text diectory = new Text();
+    public Text text = new Text();
     @FXML
-    public Button removeDir = new Button();
-    SettingsWindow settingsWindow = new SettingsWindow();
+    public Button removeButton = new Button();
 
-    public Directory() throws IOException {
-    }
-
-    @FXML
-    public void removeClick(ActionEvent actionEvent) {
-     //   directoryBox.getChildren().clear();
-    }
 }

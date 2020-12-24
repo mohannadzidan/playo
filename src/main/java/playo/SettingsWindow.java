@@ -1,57 +1,77 @@
 package playo;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import javax.swing.JFileChooser;
+
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
-import javafx.scene.control.ScrollPane;
-import javafx.fxml.FXMLLoader;
 import java.util.ArrayList;
 
 
 public class SettingsWindow {
     @FXML
-    public VBox directoryy = new VBox();
+    public VBox directory = new VBox();
     @FXML
-    public RadioButton lightMode = new RadioButton();
+    public RadioButton lightThemeRadioBtn = new RadioButton();
     @FXML
-    public RadioButton darkMode = new RadioButton();
+    public RadioButton darkThemeRadioBtn = new RadioButton();
     @FXML
-
     public ScrollPane directoriesList = new ScrollPane();
-    ArrayList<File> cars = new ArrayList<File>();
-    public SettingsWindow() throws IOException {
+    ArrayList<File> cars = new ArrayList<>();
+
+
+    public void initialize() {
+        ToggleGroup themeToggleGroup = new ToggleGroup();
+        lightThemeRadioBtn.setSelected(true);
+        darkThemeRadioBtn.setToggleGroup(themeToggleGroup);
+        lightThemeRadioBtn.setToggleGroup(themeToggleGroup);
+        themeToggleGroup.selectedToggleProperty().addListener((ob, oldV, newV) -> {
+            if (newV == lightThemeRadioBtn) {
+                // TODO access the root of the window
+                // root.getStylesheets().remove("/layout/dark.css");
+            } else {
+                // TODO access the root of the window
+                // root.getStylesheets().add("/layout/dark.css");
+            }
+        });
     }
 
     @FXML
-    public void addDirClick(MouseEvent mouseEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/layout/Directory.fxml"));
-        Node root = loader.load();
-        Directory dir = loader.getController();
-        JFileChooser chooser = new JFileChooser();
+    public void addDirectory(MouseEvent mouseEvent) throws IOException {
+
+        JFileChooser chooser = new JFileChooser(); // TODO replace this with javafx DirectoryChooser
         chooser.setCurrentDirectory(new File("."));
         chooser.setDialogTitle("choosertitle");
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         chooser.setAcceptAllFileFilterUsed(false);
         if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-            dir.diectory.setText(String.valueOf(chooser.getSelectedFile()));
-            directoriesList.setContent(directoryy);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/layout/directory.fxml"));
+            Node root = loader.load();
+            DirectoryController dir = loader.getController();
+            dir.text.setText(String.valueOf(chooser.getSelectedFile()));
+            directoriesList.setContent(directory);
             directoriesList.setPannable(true);
-            directoryy.getChildren().add(root);
+            directory.getChildren().add(root);
             cars.add((chooser.getSelectedFile()));
-        }
-        else {
+            dir.removeButton.setOnAction((e) -> {
+                directory.getChildren().remove(root);
+            });
+
+        } else {
             System.out.println("No Selection ");
         }
-        dir.removeDir.onMouseClickedProperty().addListener((a)->{
-            directoryy.getChildren().remove(root);
-        });
+
 
     }
+
     @FXML
     public void lightModeClick(MouseEvent mouseEvent) {
 
