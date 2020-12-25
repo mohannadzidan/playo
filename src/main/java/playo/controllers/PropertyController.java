@@ -2,12 +2,12 @@ package playo.controllers;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
-import playo.*;
+import playo.PlayOApp;
+import playo.panels.PlayOController;
 
 import java.io.IOException;
 
-public class PropertyController extends PlayODynamicController {
+public class PropertyController extends PlayOController {
 
     public Label title;
     public Label value;

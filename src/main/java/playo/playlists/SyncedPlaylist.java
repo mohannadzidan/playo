@@ -18,10 +18,10 @@ public class SyncedPlaylist extends Playlist {
         sync.addTrackListChangeListener((change) -> {
             if (change.getOldValue() == null && change.getNewValue() != null) {
                 // track added
-                this.addTrack(change.getNewValue());
+                super.addTrack(change.getNewValue());
             } else if (change.getOldValue() != null && change.getNewValue() == null) {
                 //track removed
-                this.removeTrack(change.getOldValue());
+                super.removeTrack(change.getOldValue());
             }
         });
 

@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxWidth="-Infinity" minWidth="-Infinity" prefWidth="300.0" styleClass="side-panel" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="playo.controllers.SidePanelController">
+<BorderPane fx:id="root" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="300.0" styleClass="side-panel" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="playo.controllers.SidePanel">
    <top>
       <VBox spacing="1" BorderPane.alignment="CENTER">
          <children>

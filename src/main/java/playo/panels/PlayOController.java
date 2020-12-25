@@ -1,8 +1,8 @@
-package playo;
+package playo.panels;
 
 import javafx.scene.Node;
 
-public abstract class PlayODynamicController {
+public abstract class PlayOController {
     public Node root;
 
     public abstract void dispose();

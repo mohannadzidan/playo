@@ -11,9 +11,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 public class Track {
+    public static final Image DEFAULT_MUSIC_ART = new Image(PlayOApp.class.getResource("/icons/default-music-art.png").toString());
     private final URL url;
     private final ObservableMap<String, Object> metadata;
-    public static final Image DEFAULT_MUSIC_ART = new Image(PlayOApp.class.getResource("/icons/default-music-art.png").toString());
 
     public Track(@NotNull URL url) {
         this.url = url;

@@ -8,7 +8,12 @@
       <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
          <children>
             <fx:include source="side-panel.fxml" />
-            <fx:include source="songs-list.fxml" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
+            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+               <children>
+                  <fx:include source="songs-list.fxml" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
+                  <fx:include source="settings.fxml" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
+               </children>
+            </VBox>
          </children>
       </HBox>
       <fx:include source="player.fxml" />

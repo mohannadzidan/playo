@@ -1,7 +1,6 @@
-package playo;
+package playo.panels;
 
 import javafx.event.ActionEvent;
-import javafx.scene.Parent;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -14,6 +13,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import playo.Track;
 import playo.events.Change;
 import playo.events.ChangeEvent;
 import playo.events.ChangeListener;
@@ -22,8 +22,8 @@ import playo.utils.ImageUtils;
 import playo.views.SwingingLabel;
 
 
-public class PlayerController extends PlayOSingletonController implements Loader<Playlist> {
-    public Parent root;
+public class PlayerPanel extends PlayOPanel {
+    private final ChangeEvent<Change<MediaPlayer.Status>> playerStateEvent = new ChangeEvent<>();
     public VBox trackInfoContainer;
     public Slider volumeSlider;
     public Slider timeSlider;
@@ -36,18 +36,27 @@ public class PlayerController extends PlayOSingletonController implements Loader
     public CheckBox shuffleCheckbox;
     public CheckBox repeatCheckbox;
     public ImageView background;
-
     private MediaPlayer mediaPlayer;
     private Playlist loadedList = null;
     private boolean isSliderModifiedFromPlayer;
-
     private final ChangeListener<Change<Track>> trackChangeListener = (c) -> {
         boolean check = mediaPlayer != null;
         loadTrack(c.getNewValue());
         if (check) mediaPlayer.setAutoPlay(true);
     };
 
-    private final ChangeEvent<Change<MediaPlayer.Status>> playerStateEvent = new ChangeEvent<>();
+    private static String formatDuration(Duration duration) {
+        var seconds = Math.round(duration.toMinutes() % 1 * 60);
+        var minutes = (int) duration.toMinutes();
+        return minutes + ":" + (seconds < 10 ? "0" + seconds : seconds);
+    }
+
+    private static String colorToHex(Color color) {
+        return String.format("#%02X%02X%02X",
+                (int) (color.getRed() * 255),
+                (int) (color.getGreen() * 255),
+                (int) (color.getBlue() * 255));
+    }
 
     public void initialize() {
         musicArt.setImage(Track.DEFAULT_MUSIC_ART);
@@ -137,7 +146,6 @@ public class PlayerController extends PlayOSingletonController implements Loader
         });
     }
 
-
     public void onPlayAction(ActionEvent actionEvent) {
         if (mediaPlayer == null) return;
 
@@ -177,21 +185,6 @@ public class PlayerController extends PlayOSingletonController implements Loader
         loadedList.nextTrack();
     }
 
-    private static String formatDuration(Duration duration) {
-        var seconds = Math.round(duration.toMinutes() % 1 * 60);
-        var minutes = (int) duration.toMinutes();
-        return minutes + ":" + (seconds < 10 ? "0" + seconds : seconds);
-    }
-
-
-    private static String colorToHex(Color color) {
-        return String.format("#%02X%02X%02X",
-                (int) (color.getRed() * 255),
-                (int) (color.getGreen() * 255),
-                (int) (color.getBlue() * 255));
-    }
-
-    @Override
     public void load(Playlist playlist) {
         if (loadedList != playlist) {
             if (loadedList != null)

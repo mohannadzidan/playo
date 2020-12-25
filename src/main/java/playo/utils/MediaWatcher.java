@@ -1,8 +1,8 @@
 package playo.utils;
 
 import javafx.application.Platform;
-import playo.playlists.Playlist;
 import playo.Track;
+import playo.playlists.Playlist;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,6 +10,7 @@ import java.net.MalformedURLException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -30,16 +31,15 @@ public class MediaWatcher {
         this.keys = new HashMap<WatchKey, Path>();
         executor = Executors.newSingleThreadScheduledExecutor();
         executor.scheduleAtFixedRate(this::processEvents, 0, 2, TimeUnit.SECONDS);
-
-    }
-
-    public Playlist getPlaylist() {
-        return playlist;
     }
 
     @SuppressWarnings("unchecked")
     static <T> WatchEvent<T> cast(WatchEvent<?> event) {
         return (WatchEvent<T>) event;
+    }
+
+    public Playlist getPlaylist() {
+        return playlist;
     }
 
     /**
@@ -53,12 +53,14 @@ public class MediaWatcher {
     }
 
     public void unRegister(Path dir) {
+        // TODO fix bug : when unregistering a dir the tracks of this dir must be removed from the playlist
         var keySet = keys.keySet();
-        for (var k : keySet) {
+        for (Iterator<WatchKey> iterator = keySet.iterator(); iterator.hasNext(); ) {
+            WatchKey k = iterator.next();
             var a = keys.get(k);
             if (a.startsWith(dir)) {
                 k.cancel();
-                keys.remove(k);
+                iterator.remove();
             }
         }
     }

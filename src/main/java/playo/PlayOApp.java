@@ -5,32 +5,39 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import playo.panels.PlayOPanel;
+import playo.panels.PlayerPanel;
+import playo.panels.SongsListPanel;
 import playo.utils.MediaWatcher;
-
-import java.io.File;
 
 public class PlayOApp extends Application {
 
-
     private static PlayOApp app;
     private MediaWatcher watcher;
+    private Stage primaryStage;
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+    public static PlayOApp getInstance() {
+        return app;
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         PlayOApp.app = this;
+        this.primaryStage = primaryStage;
+        watcher = new MediaWatcher();
         Parent root = FXMLLoader.load(PlayOApp.class.getResource("/layout/root.fxml"));
         primaryStage.setTitle("PlayO");
         primaryStage.setMinWidth(800);
         primaryStage.setMinHeight(600);
-        primaryStage.setScene(new Scene(root, 1280, 720));
-        //primaryStage.getScene().getStylesheets().add("/css/dark-theme.css");
+        primaryStage.setScene(new Scene(root, 800, 600));
         primaryStage.show();
-        var file = new File("C:/Users/mohan/Music");
-        System.out.println(file.exists());
-        watcher = new MediaWatcher();
-        watcher.registerAll(file.toPath());
-        PlayOSingletonController.getController(PlayerController.class).load(watcher.getPlaylist());
-        PlayOSingletonController.getController(SongsListController.class).load(watcher.getPlaylist());
+        PlayOPanel.getPanel(PlayerPanel.class).load(watcher.getPlaylist());
+        PlayOPanel.getPanel(SongsListPanel.class).load(watcher.getPlaylist());
+
     }
 
     @Override
@@ -39,11 +46,11 @@ public class PlayOApp extends Application {
         watcher.shutdown();
     }
 
-    public static void main(String[] args) {
-        launch(args);
+    public MediaWatcher getWatcher() {
+        return watcher;
     }
 
-    public static PlayOApp getInstance() {
-        return app;
+    public Stage getPrimaryStage() {
+        return primaryStage;
     }
 }

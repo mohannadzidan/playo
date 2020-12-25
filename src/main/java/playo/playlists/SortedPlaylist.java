@@ -9,13 +9,10 @@ import java.util.Comparator;
  * A playlist that is always sorted
  */
 public class SortedPlaylist extends SyncedPlaylist {
-    public enum SortingMode {
-        TITLE, ALBUM, ARTIST, YEAR
-    }
-
-    private SortingMode sortingMode = SortingMode.TITLE;
     private final Comparator<String> comparator = Comparator.comparing(String::toString);
     private final InvalidationEvent listSortedEvent = new InvalidationEvent();
+    private SortingMode sortingMode = SortingMode.TITLE;
+
     public SortedPlaylist(Playlist sync) {
         super(sync);
         this.trackList.addAll(sync.trackList);
@@ -33,18 +30,22 @@ public class SortedPlaylist extends SyncedPlaylist {
 
     }
 
-    public void setSortingMode(SortingMode mode){
+    public void setSortingMode(SortingMode mode) {
         this.sortingMode = mode;
         sort();
         listSortedEvent.invoke();
     }
 
-    public void addOnSortListener(InvalidationListener listener){
+    public void addOnSortListener(InvalidationListener listener) {
         listSortedEvent.addListener(listener);
     }
 
-    public void removeOnSortListener(InvalidationListener listener){
+    public void removeOnSortListener(InvalidationListener listener) {
         listSortedEvent.removeListener(listener);
+    }
+
+    public enum SortingMode {
+        TITLE, ALBUM, ARTIST, YEAR
     }
 
 }

@@ -11,11 +11,11 @@ import java.util.Objects;
 import java.util.Random;
 
 public class Playlist {
-    protected final ArrayList<Track> trackList = new ArrayList<>();
-    protected int currentTrackIndex = -1;
     private static final Random random = new Random();
+    protected final ArrayList<Track> trackList = new ArrayList<>();
     private final ChangeEvent<Change<Track>> currentTrackChangeEvent = new ChangeEvent<>();
     private final ChangeEvent<Change<Track>> trackListChangeEvent = new ChangeEvent<>();
+    protected int currentTrackIndex = -1;
 
     public void addTrack(Track track) {
         Objects.requireNonNull(track);
@@ -77,7 +77,7 @@ public class Playlist {
         else return null;
     }
 
-    public int getTrackIndex(Track track){
+    public int getTrackIndex(Track track) {
         return this.trackList.indexOf(track);
     }
 
@@ -87,8 +87,8 @@ public class Playlist {
     }
 
     public void moveTo(int index) {
-        if(index < 0 || index >= trackList.size()) {
-            Logger.error(this.getClass().getName(),"Attempt move to an invalid index! index="+index+" size="+trackList.size());
+        if (index < 0 || index >= trackList.size()) {
+            Logger.error(this.getClass().getName(), "Attempt move to an invalid index! index=" + index + " size=" + trackList.size());
         }
         if (index != currentTrackIndex) {
 
@@ -122,11 +122,11 @@ public class Playlist {
         currentTrackChangeEvent.removeListener(listener);
     }
 
-    public void addTrackListChangeListener(ChangeListener<Change<Track>> listener){
+    public void addTrackListChangeListener(ChangeListener<Change<Track>> listener) {
         trackListChangeEvent.addListener(listener);
     }
 
-    public void removeTrackListChangeListener(ChangeListener<Change<Track>> listener){
+    public void removeTrackListChangeListener(ChangeListener<Change<Track>> listener) {
         trackListChangeEvent.addListener(listener);
     }
 

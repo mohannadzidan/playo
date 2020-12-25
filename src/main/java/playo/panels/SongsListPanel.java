@@ -1,8 +1,10 @@
-package playo;
+package playo.panels;
 
 import javafx.event.ActionEvent;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.FlowPane;
+import playo.Track;
+import playo.controllers.SongCardController;
 import playo.events.Change;
 import playo.events.ChangeListener;
 import playo.events.InvalidationListener;
@@ -13,12 +15,11 @@ import playo.playlists.SortedPlaylist;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class SongsListController extends PlayOSingletonController implements Loader<Playlist> {
-    public FlowPane songCardsContainer;
-
-    private static final Logger LOGGER = new Logger(SongsListController.class.getName());
-    private SortedPlaylist playlist;
+public class SongsListPanel extends PlayOPanel {
+    private static final Logger LOGGER = new Logger(SongsListPanel.class.getName());
     private final ArrayList<SongCardController> cardControllers = new ArrayList<>();
+    public FlowPane songCardsContainer;
+    private SortedPlaylist playlist;
     private final InvalidationListener playlistSortListener = this::invalidateAllCards;
 
     private final ChangeListener<Change<Track>> playlistTracksListener = (change) -> {
@@ -47,7 +48,6 @@ public class SongsListController extends PlayOSingletonController implements Loa
         }
     };
 
-    @Override
     public void load(Playlist playlist) {
         if (this.playlist != null) {
             this.playlist.removeTrackListChangeListener(playlistTracksListener); // unbind previous list first
@@ -59,7 +59,7 @@ public class SongsListController extends PlayOSingletonController implements Loa
         invalidateAllCards();
     }
 
-    private void invalidateAllCards(){
+    private void invalidateAllCards() {
         var contents = songCardsContainer.getChildren();
         contents.clear();
         var tracks = this.playlist.getAllTracks();
@@ -85,7 +85,7 @@ public class SongsListController extends PlayOSingletonController implements Loa
     public void onSortByAction(ActionEvent actionEvent) {
         MenuItem item = (MenuItem) actionEvent.getSource();
         System.out.println(item.getText());
-        switch (item.getText()){
+        switch (item.getText()) {
             case "Title" -> playlist.setSortingMode(SortedPlaylist.SortingMode.TITLE);
             case "Album" -> playlist.setSortingMode(SortedPlaylist.SortingMode.ALBUM);
             case "Artist" -> playlist.setSortingMode(SortedPlaylist.SortingMode.ARTIST);

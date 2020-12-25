@@ -12,7 +12,7 @@ import java.util.Objects;
 
 public class SwingingLabel extends Label {
 
-    public SwingingLabel(){
+    public SwingingLabel() {
         convertLabel(this, 60, false);
     }
 
@@ -38,7 +38,7 @@ public class SwingingLabel extends Label {
             if (transition.getStatus() != Animation.Status.STOPPED) transition.playFromStart();
         });
         label.setOnMouseEntered((a) -> transition.play());
-        if(resetOnExit){
+        if (resetOnExit) {
             label.setOnMouseExited((a) -> {
                 label.setTranslateX(0);
                 transition.stop();

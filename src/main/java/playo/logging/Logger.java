@@ -11,18 +11,6 @@ public class Logger {
         this.tag = tag;
     }
 
-    public void error(String msg) {
-        error(tag, msg);
-    }
-
-    public void debug(String msg) {
-        debug(tag, msg);
-    }
-
-    public void info(String msg) {
-        info(tag, msg);
-    }
-
     public static void error(String tag, String msg) {
         System.out.print(ANSI_RED);
         System.out.print("[ERROR] ");
@@ -48,5 +36,17 @@ public class Logger {
         System.out.print(tag);
         System.out.print(": ");
         System.out.println(msg);
+    }
+
+    public void error(String msg) {
+        error(tag, msg);
+    }
+
+    public void debug(String msg) {
+        debug(tag, msg);
+    }
+
+    public void info(String msg) {
+        info(tag, msg);
     }
 }

@@ -3,7 +3,6 @@ package playo.events;
 import java.util.ArrayList;
 
 /**
- *
  * @param <T> the event handler
  */
 public abstract class Event<T extends EventListener> {
