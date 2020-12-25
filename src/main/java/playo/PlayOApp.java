@@ -34,6 +34,8 @@ public class PlayOApp extends Application {
         primaryStage.setMinWidth(800);
         primaryStage.setMinHeight(600);
         primaryStage.setScene(new Scene(root, 800, 600));
+        // add bootstrap theme
+        primaryStage.getScene().getStylesheets().add(PlayOApp.class.getResource("/css/light-theme.css").toExternalForm());
         primaryStage.show();
         PlayOPanel.getPanel(PlayerPanel.class).load(watcher.getPlaylist());
         PlayOPanel.getPanel(SongsListPanel.class).load(watcher.getPlaylist());

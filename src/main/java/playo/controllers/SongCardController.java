@@ -23,7 +23,7 @@ import playo.utils.ImageUtils;
 import playo.views.SwingingLabel;
 
 import java.io.IOException;
-import java.util.stream.Stream;
+import java.util.List;
 
 public class SongCardController extends PlayOController {
     private static final Logger LOGGER = new Logger(SongCardController.class.getName());
@@ -33,6 +33,7 @@ public class SongCardController extends PlayOController {
     public VBox stateOverlay;
     public ImageView playIcon;
     public ImageView pauseIcon;
+    public VBox cardInfoContainer;
     private final ChangeListener<Change<MediaPlayer.Status>> playerStatusListener = (c) -> {
         if (c.getNewValue() == MediaPlayer.Status.PLAYING) {
             playIcon.setVisible(true);
@@ -42,48 +43,55 @@ public class SongCardController extends PlayOController {
             pauseIcon.setVisible(true);
         }
     };
-    public VBox cardInfoContainer;
     private final MapChangeListener<String, Object> metadataLoadListener = (o) -> {
         if (o.wasAdded()) {
-            switch (o.getKey()) {
-                case "title" -> trackName.setText((String) o.getValueAdded());
-                case "artist" -> artistName.setText((String) o.getValueAdded());
-                case "image" -> {
-                    art.setImage((Image) o.getValueAdded());
-                    art.setViewport(ImageUtils.aspectRatioViewport(art.getImage(), 1, 1));
-                }
-            }
-            if (Stream.of("album", "year", "comment", "track").anyMatch(s -> o.getKey().equals(s))) {
-                try {
-                    var info = PropertyController.create(o.getKey(), o.getValueAdded().toString());
-                    SwingingLabel.convertLabel(info.value, 60, false);
-                    cardInfoContainer.getChildren().add(info.root);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    LOGGER.error("Couldn't create PropertyController!");
-                }
-            }
-
+            addMetadata(o.getKey(), o.getValueAdded());
         }
 
     };
+    private void addMetadata(String key, Object meta) {
+        switch (key) {
+            case "title" -> trackName.setText((String) meta);
+            case "artist" -> artistName.setText((String) meta);
+            case "image" -> {
+                art.setImage((Image) meta);
+                art.setViewport(ImageUtils.aspectRatioViewport(art.getImage(), 1, 1));
+            }
+        }
+        if (List.of("album", "year", "comment", "track").contains(key)) {
+            try {
+                var info = PropertyController.create(key, meta.toString());
+                SwingingLabel.convertLabel(info.value, 60, false);
+                cardInfoContainer.getChildren().add(info.root);
+            } catch (IOException e) {
+                e.printStackTrace();
+                LOGGER.error("Couldn't create PropertyController!");
+            }
+        }
+    }
+
     private boolean isSetup = false;
     private Track track;
     private Playlist playlist;
     private FadeTransition fadeStateOverlayAnimation;
     private final ChangeListener<Change<Track>> trackChangeListener = (c) -> {
-        if (this.track != null && this.track == c.getNewValue()) {
+        updateCardState(c.getOldValue(), c.getNewValue());
+    };
+
+    private void updateCardState(Track previousPlayerTrack, Track currentPlayerTrack) {
+        if (this.track != null && this.track == currentPlayerTrack) {
             var player = PlayOPanel.getPanel(PlayerPanel.class);
             player.addPlayerStateListener(playerStatusListener);
             fadeStateOverlayAnimation.setRate(-1);
             fadeStateOverlayAnimation.play();
-        } else if (this.track != null && c.getOldValue() == this.track) {
+        } else if (this.track != null && previousPlayerTrack == this.track) {
             var player = PlayOPanel.getPanel(PlayerPanel.class);
             player.removePlayerStateListener(playerStatusListener);
             fadeStateOverlayAnimation.setRate(1);
             fadeStateOverlayAnimation.play();
         }
-    };
+    }
+
     private Timeline hoverAnimation;
 
     public static SongCardController create(Track track, Playlist playlist) throws IOException {
@@ -158,7 +166,15 @@ public class SongCardController extends PlayOController {
         artistName.setText(track.getArtist());
         art.setImage(track.getMusicArt());
         art.setViewport(ImageUtils.aspectRatioViewport(track.getMusicArt(), 1, 1));
+        // update state
+        updateCardState(null, playlist.currentTrack());
+        // listen of any state change
         playlist.addCurrentTrackChangeListener(trackChangeListener);
+        // add current metadata
+        for(var key : track.getMetadata().keySet()){
+            addMetadata(key, track.getMetadata().get(key));
+        }
+        //listen for any new metadata
         track.getMetadata().addListener(metadataLoadListener);
     }
 

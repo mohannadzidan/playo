@@ -13,8 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<StackPane fx:id="root" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="playo.panels.PlayerPanel">
+<StackPane fx:id="root" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" styleClass="player" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="playo.panels.PlayerPanel">
    <children>
       <ImageView fx:id="background" pickOnBounds="true" preserveRatio="true" />
       <BorderPane maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0">
@@ -32,9 +31,9 @@
                   </HBox>
                   <HBox alignment="CENTER">
                      <children>
-                        <Label fx:id="currentTimeText" minWidth="30.0" text="0:00" textFill="WHITE" />
+                        <Label fx:id="currentTimeText" minWidth="30.0" textFill="WHITE" />
                         <Slider fx:id="timeSlider" max="300.0" HBox.hgrow="ALWAYS" />
-                        <Label fx:id="durationText" minWidth="30.0" text="4:35" textFill="WHITE" />
+                        <Label fx:id="durationText" minWidth="30.0" textFill="WHITE" />
                      </children>
                   </HBox>
                </children>
@@ -53,12 +52,12 @@
                   </ImageView>
                   <VBox fx:id="trackInfoContainer" alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefWidth="200.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Label fx:id="trackName" ellipsisString="" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="Track NameTrack NameTrack Name" textFill="WHITE" textOverrun="CLIP">
+                        <Label fx:id="trackName" ellipsisString="" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" textFill="WHITE" textOverrun="CLIP">
                            <font>
                               <Font name="Calibri Light" size="24.0" />
                            </font>
                         </Label>
-                        <Label fx:id="artistName" text="Artist Name" textFill="WHITE">
+                        <Label fx:id="artistName" textFill="WHITE">
                            <font>
                               <Font name="Calibri Bold" size="18.0" />
                            </font>

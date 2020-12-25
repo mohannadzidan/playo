@@ -35,9 +35,10 @@ public class SettingsPanel extends PlayOPanel {
         themeToggleGroup.selectedToggleProperty().addListener((ob, oldV, newV) -> {
             var root = PlayOApp.getInstance().getPrimaryStage().getScene().getRoot();
             if (newV == lightThemeRadioBtn) {
-                root.getStylesheets().remove("/layout/dark.css");
+                root.getStylesheets().remove("/css/dark-theme.css");
             } else {
-                root.getStylesheets().add("/layout/dark.css");
+
+                root.getStylesheets().add("/css/dark-theme.css");
             }
         });
     }

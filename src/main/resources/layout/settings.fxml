@@ -32,14 +32,14 @@
                   </Label>
                </children>
             </VBox>
-            <VBox>
+            <VBox spacing="10.0">
                <children>
                   <ScrollPane fx:id="directoriesList" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="350.0" prefHeight="100.0">
                      <content>
                         <VBox fx:id="directoriesContainer" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" />
                      </content>
                   </ScrollPane>
-                  <HBox>
+                  <HBox alignment="TOP_RIGHT">
                      <children>
                         <Button fx:id="addDirBut" mnemonicParsing="false" onMouseClicked="#addDirectory" text="Add directory">
                            <font>

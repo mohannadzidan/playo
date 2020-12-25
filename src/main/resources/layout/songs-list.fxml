@@ -4,6 +4,7 @@
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
@@ -21,8 +22,12 @@
               </items>
             </MenuButton>
          </left>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
       </BorderPane>
-      <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" VBox.vgrow="ALWAYS">
+      <Separator prefWidth="200.0" />
+      <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: transparent;;" VBox.vgrow="ALWAYS">
          <content>
             <FlowPane fx:id="songCardsContainer" hgap="20.0" prefHeight="0.0" prefWidth="0.0" prefWrapLength="100.0" rowValignment="BOTTOM" vgap="20.0">
                <padding>
@@ -32,7 +37,4 @@
          </content>
       </ScrollPane>
    </children>
-   <padding>
-      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-   </padding>
 </VBox>

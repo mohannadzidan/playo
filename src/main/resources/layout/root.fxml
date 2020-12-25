@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
@@ -8,6 +9,7 @@
       <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
          <children>
             <fx:include source="side-panel.fxml" />
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
             <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                <children>
                   <fx:include source="songs-list.fxml" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
@@ -16,6 +18,7 @@
             </VBox>
          </children>
       </HBox>
+      <Separator prefWidth="200.0" />
       <fx:include source="player.fxml" />
    </children>
 </VBox>

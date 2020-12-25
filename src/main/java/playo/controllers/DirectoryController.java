@@ -2,15 +2,15 @@ package playo.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import javafx.scene.text.Text;
 
 public class DirectoryController {
     @FXML
-    public HBox root = new HBox();
+    public HBox root;
     @FXML
-    public Text text = new Text();
+    public Label text;
     @FXML
-    public Button removeButton = new Button();
+    public Button removeButton;
 
 }
