@@ -1,0 +1,21 @@
+.root {
+    -fx-background-color: #0A0A0A;
+}
+.bongo-button{
+    -fx-background-color: #141414;
+}
+
+.side-panel .label{
+    -fx-text-fill: #F5F5F5;
+}
+.side-panel .selected .label,
+.side-panel .selected.label{
+    -fx-text-fill: white;
+}
+.bongo-button:hover{
+    -fx-background-color: #1F1F1F;
+}
+
+.bongo-button.selected{
+    -fx-background-color: #bf3c17;
+}

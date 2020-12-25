@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="TOP_CENTER" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="playo.SongsListController">
+   <children>
+      <BorderPane prefHeight="40.0">
+         <left>
+            <MenuButton mnemonicParsing="false" text="Sort By" BorderPane.alignment="CENTER">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#onSortByAction" text="Title" />
+                <MenuItem mnemonicParsing="false" onAction="#onSortByAction" text="Artist" />
+                  <MenuItem mnemonicParsing="false" onAction="#onSortByAction" text="Albums" />
+                  <MenuItem mnemonicParsing="false" onAction="#onSortByAction" text="Year" />
+              </items>
+            </MenuButton>
+         </left>
+      </BorderPane>
+      <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" VBox.vgrow="ALWAYS">
+         <content>
+            <FlowPane fx:id="songCardsContainer" hgap="20.0" prefHeight="0.0" prefWidth="0.0" prefWrapLength="100.0" rowValignment="BOTTOM" vgap="20.0">
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+            </FlowPane>
+         </content>
+      </ScrollPane>
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</VBox>
